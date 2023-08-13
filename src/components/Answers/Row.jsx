@@ -2,6 +2,7 @@ import TextField from '@mui/material/TextField';
 
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
+import Grid from '@mui/material/Unstable_Grid2';
 import { countries } from '../../constant/countries';
 import { getDistanceText } from '../../util/getDistanceText';
 import { getCompassDirectionText } from '../../util/getCompassDirectionText';
@@ -21,9 +22,11 @@ export const Row = ({ code }) => {
   // debugger;
   return (
     <ListItem>
-      <span>{codeObj.name}</span>
-      <span>{d}</span>
-      <span>{compassDirection}</span>
+      <Grid container spacing={2} sx={{ flexGrow: 1 }}>
+        <Grid xs={6} sx={{ flexGrow: 1 }}>{codeObj.name}</Grid>
+        <Grid xs={4} sx={{ flexGrow: 1 }}>{d}</Grid>
+        <Grid textAlign="right" xs={1} sx={{ flexGrow: 1 }}>{compassDirection}</Grid>
+      </Grid>
     </ListItem>
   )
 }
