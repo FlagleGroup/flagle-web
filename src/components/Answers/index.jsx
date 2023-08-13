@@ -1,12 +1,7 @@
 import * as React from 'react';
 import SendIcon from '@mui/icons-material/Send';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import TextField from '@mui/material/TextField';
 import InputBase from '@mui/material/InputBase';
-import Input from '@mui/material/Input';
 import Autocomplete from '@mui/material/Autocomplete';
-import Fab from '@mui/material/Fab';
 import List from '@mui/material/List';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
