@@ -36,7 +36,7 @@ export function Answers() {
       <Paper
         elevation={2}
         component="form"
-        sx={{ p: '2px 4px', mt: '20px', display: 'flex', alignItems: 'center', width: 400 }}
+        sx={{ mt: '20px', display: 'flex', alignItems: 'center' }}
       >
         <Autocomplete
           popupIcon={null}
@@ -44,13 +44,12 @@ export function Answers() {
           options={countries.map(e => ({ code: e.code, label: e.name }))}
           openOnFocus={false}
           renderInput={(params) => (
-
-          <div ref={params.InputProps.ref}>
-          <InputBase type="text" {...params.inputProps} />
-        </div>
+            <div ref={params.InputProps.ref}>
+              <InputBase type="text" sx={{ p: '0 16px', height: '50px'}} fullWidth {...params.inputProps} />
+            </div>
           )}
+          sx={{ flexGrow: 1, m: '-4px 0'}}
         />
-        <Fab color="primary" size="small"><SendIcon /></Fab>
         <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
           <SendIcon />
         </IconButton>
