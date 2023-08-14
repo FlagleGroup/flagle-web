@@ -1,8 +1,11 @@
-const BASE_LOG = Math.pow(40075 / 2, 0.1); // earth's perimeter is 40075 km
+const PERIMETER = 40075; // earth's perimeter is 40075 km
+// const BASE_LOG = Math.pow(PERIMETER / 2, 0.1);
 
 export const getAccuracyString = (distance) => {
+  // accuracy should be in [0 ~ 10]
   // FIXME: should use a better way to get accuracy
-  const accuracy = 10 - Math.round(Math.log(distance) / Math.log(BASE_LOG)); // [0 ~ 10]
+  // const accuracy = 10 - Math.round(Math.log(distance) / Math.log(BASE_LOG));
+  const accuracy = 10 - Math.round(10 * (distance / PERIMETER));
   const greenLength = Math.floor(accuracy / 2);
   const yellowLength = accuracy - greenLength * 2;
   return [
