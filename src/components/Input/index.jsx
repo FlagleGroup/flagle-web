@@ -7,7 +7,7 @@ import Paper from '@mui/material/Paper';
 
 import { countries } from '../../constant/countries';
 
-export const Input = () => {
+export const Input = ({ curCounties, setCurCountries }) => {
   return (
     <Paper
       elevation={2}
