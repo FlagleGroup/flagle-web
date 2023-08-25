@@ -15,8 +15,8 @@ export const Row = ({ code }) => {
   }
   const codeObj = countries.find(e => e.code === code.toUpperCase());
   const answerObj = countries.find(e => e.code === 'hk'.toUpperCase());
-  const d = getDistanceText(answerObj, codeObj);
-  const compassDirection = getCompassDirectionText(answerObj, codeObj);
+  const d = getDistanceText(codeObj, answerObj);
+  const compassDirection = getCompassDirectionText(codeObj, answerObj);
   const s = getAccuracyString(d);
   // debugger;
   return (
