@@ -1,13 +1,21 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import SendIcon from '@mui/icons-material/Send';
 import InputBase from '@mui/material/InputBase';
 import Autocomplete from '@mui/material/Autocomplete';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 
-import { countries } from '../../constant/countries';
+import { countries as allCountries } from '../../constant/countries';
 
-export const Input = ({ curCounties, setCurCountries }) => {
+export const Input = ({ countries, setCountries }) => {
+  const [inputCountry, setInputCountry] = useState(null);
+  const onSelectCountry = (_, value) => {
+    setInputCountry(value);
+  };
+  const onSubmit = () => {
+    inputCountry && setCountries([...countries, inputCountry.code]);
+    setInputCountry(null);
+  }
   return (
     <Paper
       elevation={2}
@@ -17,8 +25,11 @@ export const Input = ({ curCounties, setCurCountries }) => {
       <Autocomplete
         popupIcon={null}
         id="combo-box-demo"
-        options={countries.map(e => ({ code: e.code, label: e.name }))}
+        options={allCountries.map(e => ({ code: e.code, label: e.name }))}
         openOnFocus={false}
+        onChange={onSelectCountry}
+        value={inputCountry}
+        isOptionEqualToValue={(option, value) => option.code === value.code}
         renderInput={(params) => (
           <InputBase
             ref={params.InputProps.ref}
@@ -30,7 +41,7 @@ export const Input = ({ curCounties, setCurCountries }) => {
         )}
         sx={{ flexGrow: 1, m: '-4px 0' }}
       />
-      <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
+      <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions" onClick={onSubmit}>
         <SendIcon />
       </IconButton>
     </Paper>

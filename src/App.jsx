@@ -8,7 +8,7 @@ import { Input } from './components/Input';
 import './App.css';
 
 export const App = () => {
-  const [curCounties, setCurCountries] = useState(['ca', 'mo', 'cn']);
+  const [curCounties, setCurCountries] = useState(['CA', 'MO', 'CN']);
   return (
     <div className="App">
       <Header />
