@@ -30,6 +30,7 @@ export const Input = ({ countries, setCountries }) => {
         onChange={onSelectCountry}
         value={inputCountry}
         isOptionEqualToValue={(option, value) => option.code === value.code}
+        getOptionDisabled={(option) => countries.some(e => e === option.code)}
         renderInput={(params) => (
           <InputBase
             ref={params.InputProps.ref}
