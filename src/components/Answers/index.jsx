@@ -9,7 +9,7 @@ export function Answers({ countries }) {
   list.pop();
   return (
     <React.Fragment>
-      <Paper elevation={2} sx={{ mt: '20px' }}>
+      <Paper elevation={4} sx={{ mt: '20px' }}>
         <List disablePadding>
           {list}
         </List>
