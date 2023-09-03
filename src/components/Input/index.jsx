@@ -9,16 +9,27 @@ import { countries as allCountries } from '../../constant/countries';
 
 export const Input = ({ countries, setCountries }) => {
   const [inputCountry, setInputCountry] = useState(null);
+  const [isOpen, setIsOpen] = useState(false); // To indicate autoComplete dropdown status
   const onSelectCountry = (_, value) => {
     setInputCountry(value);
   };
   const onSubmit = () => {
-    inputCountry && setCountries([...countries, inputCountry.code]);
+    inputCountry && countries.length < 6 && setCountries([...countries, inputCountry.code]);
     setInputCountry(null);
-  }
+  };
+
+  // Press enter again to submit after selecting an option to input.
+  const onInputSubmit = (e) => {
+    if (e.key === 'Enter' && !isOpen) {
+      e.preventDefault();
+      onSubmit();
+      return false;
+    }
+  };
+
   return (
     <Paper
-      elevation={2}
+      elevation={4}
       component="form"
       sx={{ mt: '20px', display: 'flex', alignItems: 'center' }}
     >
@@ -28,9 +39,13 @@ export const Input = ({ countries, setCountries }) => {
         options={allCountries.map(e => ({ code: e.code, label: e.name }))}
         openOnFocus={false}
         onChange={onSelectCountry}
+        onKeyDown={onInputSubmit}
+        autoHighlight
         value={inputCountry}
         isOptionEqualToValue={(option, value) => option.code === value.code}
         getOptionDisabled={(option) => countries.some(e => e === option.code)}
+        onOpen={() => setIsOpen(true)}
+        onClose={() => setIsOpen(false)}
         renderInput={(params) => (
           <InputBase
             ref={params.InputProps.ref}
