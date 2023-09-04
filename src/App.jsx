@@ -8,12 +8,12 @@ import { Input } from './components/Input';
 import { CODE, END_TIME } from './constant/keys';
 import './App.css';
 import { getInfo } from './service';
+import { isFinished } from './util/isFinished';
 
 export const App = () => {
   const [curCounties, setCurCountries] = useState(['CA']);
   const [code, setCode] = useState('FR');
-  const lastCountry = curCounties[curCounties.length -1];
-  const isFinished = curCounties.length >= 6 || (lastCountry && lastCountry === code);
+  const finishedStatus = isFinished(curCounties, code);
   const showStatistic = () => {};
 
   const init = useCallback(() => {
@@ -43,10 +43,10 @@ export const App = () => {
   }, [init]);
 
   useEffect(() => {
-    if (isFinished) {
+    if (finishedStatus) {
       showStatistic();
     }
-  }, [isFinished]);
+  }, [finishedStatus]);
 
   return (
     <div className="App">
@@ -54,7 +54,7 @@ export const App = () => {
       <Content>
         <Flag />
         <Answers countries={curCounties} />
-        <Input countries={curCounties} setCountries={setCurCountries} />
+        <Input countries={curCounties} setCountries={setCurCountries} code={code} />
       </Content>
       <Footer />
     </div>
