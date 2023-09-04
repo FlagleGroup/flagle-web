@@ -6,6 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 
 import { countries as allCountries } from '../../constant/countries';
+import { sendLog } from '../../service';
 
 export const Input = ({ countries, setCountries }) => {
   const [inputCountry, setInputCountry] = useState(null);
@@ -16,6 +17,11 @@ export const Input = ({ countries, setCountries }) => {
   const onSubmit = () => {
     inputCountry && countries.length < 6 && setCountries([...countries, inputCountry.code]);
     setInputCountry(null);
+    sendLog({
+      code: inputCountry.code,
+      t: Date.Date.now(),
+      uuid: '', // TODO
+    });
   };
 
   // Press enter again to submit after selecting an option to input.
