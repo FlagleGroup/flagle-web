@@ -22,7 +22,7 @@ export const Input = ({ countries, setCountries, code }) => {
     setInputCountry(null);
     sendLog({
       code: inputCountry.code,
-      t: Date.Date.now(),
+      t: Date.now(),
       uuid: '', // TODO
     });
   };
