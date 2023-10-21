@@ -5,7 +5,7 @@ import { getDistanceText } from '../../util/getDistanceText';
 import { getCompassDirectionText } from '../../util/getCompassDirectionText';
 import { getAccuracyString } from '../../util/getAccuracy';
 
-export const Row = ({ code }) => {
+export const Row = ({ code, answer }) => {
   if (!code) {
     return (
       <ListItem>
@@ -14,7 +14,7 @@ export const Row = ({ code }) => {
     )
   }
   const codeObj = countries.find(e => e.code === code);
-  const answerObj = countries.find(e => e.code === 'HK');
+  const answerObj = countries.find(e => e.code === answer);
   const d = getDistanceText(codeObj, answerObj);
   const compassDirection = getCompassDirectionText(codeObj, answerObj);
   const s = getAccuracyString(d);

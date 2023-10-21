@@ -52,8 +52,8 @@ export const App = () => {
     <div className="App">
       <Header code={code} />
       <Content>
-        <Flag />
-        <Answers countries={curCounties} />
+        <Flag code={code}/>
+        <Answers countries={curCounties} answer={code}/>
         <Input countries={curCounties} setCountries={setCurCountries} code={code} />
       </Content>
       <Footer />
