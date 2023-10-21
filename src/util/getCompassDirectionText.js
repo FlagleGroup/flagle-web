@@ -1,4 +1,4 @@
-import { getCompassDirection, getRhumbLineBearing } from 'geolib';
+import { getCompassDirection, getRhumbLineBearing, getDistance } from 'geolib';
 
 const arrows = {
   N: "⬆️",
@@ -20,6 +20,7 @@ const arrows = {
 };
 
 export const getCompassDirectionText = (a, b) => {
+  if (getDistance(a, b) === 0) return '🎉';
   const res = getCompassDirection(a, b, (a, b) => Math.round(getRhumbLineBearing(a, b) / 45) * 45);
   return arrows[res];
 }
