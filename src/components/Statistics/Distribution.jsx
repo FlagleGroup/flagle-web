@@ -37,10 +37,13 @@ const styles = {
     position: 'absolute',
     left: 0,
     textAlign: 'center',
+  },
+  curLabel: {
+    background: '#1976d2',
   }
 }
 
-export const Distribution = ({ data }) => {
+export const Distribution = ({ data, curDistribution }) => {
   const max = Math.max(...Object.values(data));
   if (max === 0) {
 
@@ -58,8 +61,15 @@ export const Distribution = ({ data }) => {
           percentage.map(([k, v]) => (
             <div style={styles.row}>
               <Typography variant="body2" display="block" style={styles.axis}>{k}</Typography>
-              <div style={{ ...styles.bar, width: v }}>
-                <div style={data[k] === 0 ? styles.label0 : styles.label}>
+              <div style={{
+                ...styles.bar,
+                width: v,
+                ...(curDistribution === +k ? styles.curLabel : {}),
+              }}>
+                <div style={{
+                  ...(data[k] === 0 ? styles.label0 : styles.label),
+                  ...(curDistribution === +k ? styles.curLabel : {}),
+                }}>
                   <Typography variant="body2" display="block">{data[k]}</Typography>
                 </div>
               </div>

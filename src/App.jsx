@@ -12,7 +12,7 @@ import { getInfo } from './service';
 import { isFinished } from './util/isFinished';
 
 export const App = () => {
-  const [curCounties, setCurCountries] = useState(['CA', 'CN', 'BR', 'GE', 'GR']);
+  const [curCounties, setCurCountries] = useState(['CA', 'CN', 'BR', 'GE', 'FR']);
   const [code, setCode] = useState('FR');
   const finishedStatus = isFinished(curCounties, code);
   const showStatistic = () => {};
@@ -58,7 +58,7 @@ export const App = () => {
         <Input countries={curCounties} setCountries={setCurCountries} code={code} />
       </Content>
       <Footer />
-      <Statistics />
+      <Statistics countries={curCounties} answer={code} />
     </div>
   );
 }

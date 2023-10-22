@@ -7,14 +7,14 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 import { Distribution } from './Distribution';
 
-export const Statistics = () => {
+export const Statistics = ({ countries, answer }) => {
   const distributionData = {
     '1': 11,
     '2': 0,
     '3': 1,
     '4': 0,
-    '5': 0,
-    '6': 0,
+    '5': 1,
+    '6': 1,
   };
 
   return (
@@ -42,7 +42,7 @@ export const Statistics = () => {
             <Typography variant="body2" display="block" gutterBottom>Max Streak</Typography>
           </Grid>
         </Grid>
-        <Distribution data={distributionData} />
+        <Distribution data={distributionData} curDistribution={answer === countries[countries.length - 1] ? countries.length : 0}/>
       </DialogContent>
     </Dialog>
   );
