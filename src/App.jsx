@@ -12,8 +12,8 @@ import { getInfo } from './service';
 import { isFinished } from './util/isFinished';
 
 export const App = () => {
-  const [curCounties, setCurCountries] = useState(['CA', 'CN', 'BR', 'GE', 'FR']);
-  const [code, setCode] = useState('FR');
+  const [curCounties, setCurCountries] = useState(['FR', 'NL', 'BZ', 'BE', 'CN', 'DE']);
+  const [code, setCode] = useState('DE');
   const finishedStatus = isFinished(curCounties, code);
   const showStatistic = () => {};
 

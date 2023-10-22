@@ -21,9 +21,9 @@ export const Row = ({ code, answer }) => {
   // debugger;
   return (
     <ListItem>
-      <Grid container spacing={2} sx={{ flexGrow: 1 }}>
-        <Grid xs={5} sx={{ flexGrow: 1 }}>{codeObj.name}</Grid>
-        <Grid xs={3} sx={{ flexGrow: 1 }}>{s}</Grid>
+      <Grid container spacing={0} sx={{ flexGrow: 1 }}>
+        <Grid xs={4} sx={{ flexGrow: 1 }}>{codeObj.name}</Grid>
+        <Grid xs={4} sx={{ flexGrow: 1 }}>{s}</Grid>
         <Grid textAlign="right" xs={3} sx={{ flexGrow: 1 }}>{d} km</Grid>
         <Grid textAlign="right" xs={1} sx={{ flexGrow: 1 }}>{compassDirection}</Grid>
       </Grid>

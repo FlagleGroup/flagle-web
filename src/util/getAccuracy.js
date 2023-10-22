@@ -5,7 +5,8 @@ export const getAccuracyString = (distance) => {
   // accuracy should be in [0 ~ 10]
   // FIXME: should use a better way to get accuracy
   // const accuracy = 10 - Math.round(Math.log(distance) / Math.log(BASE_LOG));
-  const accuracy = 10 - Math.round(10 * (distance / PERIMETER));
+  const accuracyDistance = Math.round(10 * (distance / PERIMETER));
+  const accuracy = 10 - (+distance === 0 ? 0 : Math.max(1, accuracyDistance));
   const greenLength = Math.floor(accuracy / 2);
   const yellowLength = accuracy - greenLength * 2;
   return [
