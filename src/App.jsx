@@ -5,13 +5,14 @@ import { Flag } from './components/Flag';
 import { Footer } from './components/Footer';
 import { Content } from './components/Content';
 import { Input } from './components/Input';
+import { Statistics } from './components/Statistics';
 import { CODE, END_TIME } from './constant/keys';
 import './App.css';
 import { getInfo } from './service';
 import { isFinished } from './util/isFinished';
 
 export const App = () => {
-  const [curCounties, setCurCountries] = useState(['CA']);
+  const [curCounties, setCurCountries] = useState(['CA', 'CN', 'BR', 'GE', 'GR']);
   const [code, setCode] = useState('FR');
   const finishedStatus = isFinished(curCounties, code);
   const showStatistic = () => {};
@@ -57,6 +58,7 @@ export const App = () => {
         <Input countries={curCounties} setCountries={setCurCountries} code={code} />
       </Content>
       <Footer />
+      <Statistics />
     </div>
   );
 }
