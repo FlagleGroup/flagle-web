@@ -39,7 +39,6 @@ export const Input = ({ countries, setCountries, code }) => {
   return (
     <Paper
       elevation={4}
-      component="form"
       sx={{ mt: '20px', display: 'flex', alignItems: 'center' }}
     >
       {
