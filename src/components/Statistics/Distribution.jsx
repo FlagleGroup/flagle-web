@@ -51,7 +51,6 @@ export const Distribution = ({ data, curDistribution }) => {
   }
 
   const percentage = Object.entries(data).map(([k, v]) => ([k, `${v / max * 100}%`]));
-  console.log('pe', percentage)
 
   return (
     <>
@@ -59,7 +58,7 @@ export const Distribution = ({ data, curDistribution }) => {
       <div>
         {
           percentage.map(([k, v]) => (
-            <div style={styles.row}>
+            <div style={styles.row} key={k}>
               <Typography variant="body2" display="block" style={styles.axis}>{k}</Typography>
               <div style={{
                 ...styles.bar,

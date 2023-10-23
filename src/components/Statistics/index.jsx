@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
@@ -6,8 +6,14 @@ import DialogContent from '@mui/material/DialogContent';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 import { Distribution } from './Distribution';
+import { readAll } from '../../util/db';
+import { getCurrentStreak, getMaxStreak } from '../../util/streak';
 
 export const Statistics = ({ countries, answer }) => {
+  const [dataPlayed, setDataPlayed] = useState(0);
+  const [dataWin, setDataWin] = useState(0);
+  const [dataCurrentStreak, setDataCurrentStreak] = useState(0);
+  const [dataMaxStreak, setDataMaxStreak] = useState(0);
   const distributionData = {
     '1': 11,
     '2': 0,
@@ -17,6 +23,40 @@ export const Statistics = ({ countries, answer }) => {
     '6': 1,
   };
 
+  useEffect(() => {
+    readAll().then((res) => {
+      console.log('rrr', res);
+      const dateResult = [];
+      res.forEach(({time, code, answer}) => {
+        const date = new Date(time).toISOString().slice(0, 10);
+        const lastResult = dateResult[dateResult.length - 1];
+        if (lastResult && lastResult.date === date) {
+          lastResult.codes ? lastResult.codes.push(code) : lastResult.codes = [code];
+          if (lastResult.codes.length === 6 || code === answer) {
+            lastResult.isFinished = true;
+            if (code === answer) {
+              lastResult.isWin = true;
+            }
+          }
+        } else {
+          dateResult.push({
+            date,
+            codes: [code],
+            answer,
+            isFinished: code === answer,
+            isWin: code === answer,
+          });
+        }
+      });
+
+      const dataPlayedRes = dateResult.filter((e) => e.isFinished).length;
+      setDataPlayed(dataPlayedRes);
+      setDataWin(dataPlayedRes && Math.round(dateResult.filter((e) => e.isWin).length / dataPlayedRes * 100));
+      setDataCurrentStreak(getCurrentStreak(dateResult));
+      setDataMaxStreak(getMaxStreak(dateResult));
+    });
+  }, []);
+
   return (
     <Dialog open fullWidth>
       <DialogTitle>
@@ -25,20 +65,20 @@ export const Statistics = ({ countries, answer }) => {
       <DialogContent>
         <Grid container spacing={2}>
           <Grid xs={3}>
-            <Typography variant="h4">3</Typography>
+            <Typography variant="h4">{dataPlayed}</Typography>
             <Typography variant="body2" display="block" gutterBottom>Played</Typography>
           </Grid>
           <Grid xs={3}>
-            <Typography variant="h4">33</Typography>
+            <Typography variant="h4">{dataWin}</Typography>
             <Typography variant="body2" display="block" gutterBottom>Win %</Typography>
           </Grid>
 
           <Grid xs={3}>
-            <Typography variant="h4">3</Typography>
+            <Typography variant="h4">{dataCurrentStreak}</Typography>
             <Typography variant="body2" display="block" gutterBottom>Current Streak</Typography>
           </Grid>
           <Grid xs={3}>
-            <Typography variant="h4">4</Typography>
+            <Typography variant="h4">{dataMaxStreak}</Typography>
             <Typography variant="body2" display="block" gutterBottom>Max Streak</Typography>
           </Grid>
         </Grid>
@@ -46,4 +86,4 @@ export const Statistics = ({ countries, answer }) => {
       </DialogContent>
     </Dialog>
   );
-}
+};
