@@ -7,7 +7,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 import { Distribution } from './Distribution';
 import { readAll } from '../../util/db';
-import { getCurrentStreak, getMaxStreak } from '../../util/streak';
+import { getCurrentStreak, getDateResultListFromDBResult, getMaxStreak } from './util';
 
 export const Statistics = ({ countries, answer }) => {
   const [dataPlayed, setDataPlayed] = useState(0);
@@ -25,30 +25,8 @@ export const Statistics = ({ countries, answer }) => {
 
   useEffect(() => {
     readAll().then((res) => {
-      console.log('rrr', res);
-      const dateResult = [];
-      res.forEach(({time, code, answer}) => {
-        const date = new Date(time).toISOString().slice(0, 10);
-        const lastResult = dateResult[dateResult.length - 1];
-        if (lastResult && lastResult.date === date) {
-          lastResult.codes ? lastResult.codes.push(code) : lastResult.codes = [code];
-          if (lastResult.codes.length === 6 || code === answer) {
-            lastResult.isFinished = true;
-            if (code === answer) {
-              lastResult.isWin = true;
-            }
-          }
-        } else {
-          dateResult.push({
-            date,
-            codes: [code],
-            answer,
-            isFinished: code === answer,
-            isWin: code === answer,
-          });
-        }
-      });
-
+      console.log('db res', res);
+      const dateResult = getDateResultListFromDBResult(res);
       const dataPlayedRes = dateResult.filter((e) => e.isFinished).length;
       setDataPlayed(dataPlayedRes);
       setDataWin(dataPlayedRes && Math.round(dateResult.filter((e) => e.isWin).length / dataPlayedRes * 100));
