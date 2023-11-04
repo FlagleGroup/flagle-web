@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Answers } from './components/Answers';
-import { Header } from './components/Header';
-import { Flag } from './components/Flag';
-import { Footer } from './components/Footer';
-import { Content } from './components/Content';
-import { Input } from './components/Input';
-import { Statistics } from './components/Statistics';
+import { Answers } from './components/Answers/Answers';
+import { Header } from './components/Header/Header';
+import { Flag } from './components/Flag/Flag';
+import { Footer } from './components/Footer/Footer';
+import { Content } from './components/Content/Content';
+import { Input } from './components/Input/Input';
+import { Statistics } from './components/Statistics/Statistics';
 import { CODE, END_TIME } from './constant/keys';
 import './App.css';
 import { getInfo } from './service';
