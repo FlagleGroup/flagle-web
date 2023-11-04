@@ -35,9 +35,10 @@ export const isPreviousDayBefore = (a, b) => {
   if (!a || !b) {
     return false;
   }
+
   const d = new Date(a);
   d.setDate(d.getDate() - 1);
-  return d.toISOString().slice(0, 10) === b;
+  return d.toISOString().slice(0, 10) === new Date(b).toISOString().slice(0, 10);
 };
 
 export const getCurrentStreak = (dateResult) => {
