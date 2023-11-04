@@ -75,3 +75,8 @@ export const getMaxStreak = (dateResult) => {
   }
   return streak;
 };
+
+export const getDistributionData = (dateResult) => dateResult.filter(e => e.isWin).map(e => e.codes.length).reduce((a, l) => {
+  a[l] = (a[l] || 0) + 1;
+  return a;
+}, {});

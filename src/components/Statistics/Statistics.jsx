@@ -7,21 +7,23 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 import { Distribution } from './Distribution';
 import { readAll } from '../../util/db';
-import { getCurrentStreak, getDateResultListFromDBResult, getMaxStreak } from './util';
+import { getCurrentStreak, getDateResultListFromDBResult, getDistributionData, getMaxStreak } from './util';
+
+const DEFAULT_DISTRIBUTIONDATA = {
+  '1': 0,
+  '2': 0,
+  '3': 0,
+  '4': 0,
+  '5': 0,
+  '6': 0,
+};
 
 export const Statistics = ({ countries, answer }) => {
   const [dataPlayed, setDataPlayed] = useState(0);
   const [dataWin, setDataWin] = useState(0);
   const [dataCurrentStreak, setDataCurrentStreak] = useState(0);
   const [dataMaxStreak, setDataMaxStreak] = useState(0);
-  const distributionData = {
-    '1': 11,
-    '2': 0,
-    '3': 1,
-    '4': 0,
-    '5': 1,
-    '6': 1,
-  };
+  const [distributionData, setDistributionData] = useState(DEFAULT_DISTRIBUTIONDATA);
 
   useEffect(() => {
     readAll().then((res) => {
@@ -32,6 +34,10 @@ export const Statistics = ({ countries, answer }) => {
       setDataWin(dataPlayedRes && Math.round(dateResult.filter((e) => e.isWin).length / dataPlayedRes * 100));
       setDataCurrentStreak(getCurrentStreak(dateResult));
       setDataMaxStreak(getMaxStreak(dateResult));
+      setDistributionData({
+        ...DEFAULT_DISTRIBUTIONDATA,
+        ...getDistributionData(dateResult),
+      });
     });
   }, []);
 
