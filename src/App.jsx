@@ -10,14 +10,18 @@ import { CODE, END_TIME } from './constant/keys';
 import './App.css';
 import { getInfo } from './service';
 import { isFinished } from './util/isFinished';
+import { readAll } from './util/db';
 
 export const App = () => {
-  const [curCounties, setCurCountries] = useState(['FR', 'NL', 'BZ', 'BE', 'CN', 'DE']);
-  const [code, setCode] = useState('DE');
+  const [curCounties, setCurCountries] = useState([]);
+  const [code, setCode] = useState();
   const finishedStatus = isFinished(curCounties, code);
-  const showStatistic = () => {};
+  const [openStatistic, setOpenStatistic] = useState(false);
+  const showStatistic = () => {
+    setOpenStatistic(true);
+  };
 
-  const init = useCallback(() => {
+  const initCode = useCallback(() => {
     // Read cache in localStorage first
     const codeFromLocalStorage = localStorage.getItem(CODE);
     if (codeFromLocalStorage && localStorage.getItem(END_TIME) > Date.now()) {
@@ -37,11 +41,28 @@ export const App = () => {
     }).catch((err) => {
       // TODO: cache err and call Ralf.
     });
+  }, [setCode]);
+
+  const initCurCounties = useCallback(() => {
+    readAll().then((res) => {
+      const todayStartTime = new Date(new Date().toISOString().slice(0, 10)).getTime();
+      const countries = [];
+      while (res.length > 0 && res[res.length - 1].time > todayStartTime) {
+        const codeItem = res.pop();
+        countries.unshift(codeItem.code);
+        if (countries.length >= 6) {
+          break;
+        }
+      }
+      setCurCountries(countries);
+    });
   }, []);
 
   useEffect(() => {
-    init();
-  }, [init]);
+    initCode();
+    initCurCounties();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (finishedStatus) {
@@ -51,14 +72,16 @@ export const App = () => {
 
   return (
     <div className="App">
-      <Header code={code} />
+      <Header code={code} showStatisticModal={showStatistic} />
       <Content>
-        <Flag code={code}/>
-        <Answers countries={curCounties} answer={code}/>
+        <Flag code={code} />
+        <Answers countries={curCounties} answer={code} />
         <Input countries={curCounties} setCountries={setCurCountries} code={code} />
       </Content>
       <Footer />
-      <Statistics countries={curCounties} answer={code} />
+      {
+        openStatistic && (<Statistics open={openStatistic} countries={curCounties} answer={code} />)
+      }
     </div>
   );
 }

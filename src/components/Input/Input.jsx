@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 
 import { countries as allCountries } from '../../constant/countries';
-import { sendLog } from '../../service';
+import { sendLog } from '../../util/log';
 import { isFinished, isSucceed } from '../../util/isFinished';
 import { Finished } from './Finished';
 
@@ -22,8 +22,8 @@ export const Input = ({ countries, setCountries, code }) => {
     setInputCountry(null);
     sendLog({
       code: inputCountry.code,
-      t: Date.now(),
-      uuid: '', // TODO
+      time: Date.now(),
+      answer: code,
     });
   };
 

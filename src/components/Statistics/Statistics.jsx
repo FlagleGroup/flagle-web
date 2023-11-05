@@ -18,7 +18,7 @@ const DEFAULT_DISTRIBUTIONDATA = {
   '6': 0,
 };
 
-export const Statistics = ({ countries, answer }) => {
+export const Statistics = ({ countries, answer, open }) => {
   const [dataPlayed, setDataPlayed] = useState(0);
   const [dataWin, setDataWin] = useState(0);
   const [dataCurrentStreak, setDataCurrentStreak] = useState(0);
@@ -42,7 +42,7 @@ export const Statistics = ({ countries, answer }) => {
   }, []);
 
   return (
-    <Dialog open fullWidth>
+    <Dialog open={open} fullWidth>
       <DialogTitle>
         Statistics
       </DialogTitle>

@@ -20,6 +20,7 @@ const getDB = () => new Promise((resolve, reject) => {
       objectStore.createIndex('code', 'code', { unique: false });
       objectStore.createIndex('answer', 'answer', { unique: false });
     }
+    console.log('数据库更新成功');
     resolve(db);
   };
 });
@@ -49,8 +50,8 @@ export const readAll = () => new Promise((resolve, reject) => {
   getDB().then((db) => {
     const objectStore = db.transaction('guess').objectStore('guess');
 
+    const result = [];
     objectStore.openCursor().onsuccess = (event) => {
-      const result = [];
       const cursor = event.target.result;
 
       if (cursor) {

@@ -7,7 +7,7 @@ describe('getDateResultListFromDBResult', () => {
 
   it('run getDateResultListFromDBResult case 2', () => {
     expect(getDateResultListFromDBResult([{
-      time: '2021-05-05T20:18:07.534Z',
+      time: new Date('2021-05-05T20:18:07.534Z').getTime(),
       code: 'US',
       answer: 'US',
     }])).toMatchObject([{
@@ -21,7 +21,7 @@ describe('getDateResultListFromDBResult', () => {
 
   it('run getDateResultListFromDBResult case 3', () => {
     expect(getDateResultListFromDBResult([{
-      time: '2021-05-05T20:18:07.534Z',
+      time: new Date('2021-05-05T20:18:07.534Z').getTime(),
       code: 'US',
       answer: 'BR',
     }])).toMatchObject([{
@@ -35,11 +35,11 @@ describe('getDateResultListFromDBResult', () => {
 
   it('run getDateResultListFromDBResult case 4', () => {
     expect(getDateResultListFromDBResult([{
-      time: '2021-05-05T20:18:07.534Z',
+      time: new Date('2021-05-05T20:18:07.534Z').getTime(),
       code: 'US',
       answer: 'BR',
     }, {
-      time: '2021-05-05T20:19:07.534Z',
+      time: new Date('2021-05-05T20:19:07.534Z').getTime(),
       code: 'BR',
       answer: 'BR',
     }])).toMatchObject([{
@@ -53,27 +53,27 @@ describe('getDateResultListFromDBResult', () => {
 
   it('run getDateResultListFromDBResult case 5', () => {
     expect(getDateResultListFromDBResult([{
-      time: '2021-05-05T20:18:07.534Z',
+      time: new Date('2021-05-05T20:18:07.534Z').getTime(),
       code: 'US',
       answer: 'BR',
     }, {
-      time: '2021-05-05T20:19:07.534Z',
+      time: new Date('2021-05-05T20:19:07.534Z').getTime(),
       code: 'FR',
       answer: 'BR',
     }, {
-      time: '2021-05-05T20:19:07.534Z',
+      time: new Date('2021-05-05T20:19:07.534Z').getTime(),
       code: 'GR',
       answer: 'BR',
     }, {
-      time: '2021-05-05T20:20:07.534Z',
+      time: new Date('2021-05-05T20:20:07.534Z').getTime(),
       code: 'SA',
       answer: 'BR',
     }, {
-      time: '2021-05-05T20:21:07.534Z',
+      time: new Date('2021-05-05T20:21:07.534Z').getTime(),
       code: 'ZA',
       answer: 'BR',
     }, {
-      time: '2021-05-05T20:22:07.534Z',
+      time: new Date('2021-05-05T20:22:07.534Z').getTime(),
       code: 'TH',
       answer: 'BR',
     }])).toMatchObject([{
@@ -87,11 +87,11 @@ describe('getDateResultListFromDBResult', () => {
 
   it('run getDateResultListFromDBResult case 6', () => {
     expect(getDateResultListFromDBResult([{
-      time: '2021-05-04T20:18:07.534Z',
+      time: new Date('2021-05-04T20:18:07.534Z').getTime(),
       code: 'FR',
       answer: 'BR',
     }, {
-      time: '2021-05-05T20:18:07.534Z',
+      time: new Date('2021-05-05T20:18:07.534Z').getTime(),
       code: 'US',
       answer: 'US',
     }])).toMatchObject([{
