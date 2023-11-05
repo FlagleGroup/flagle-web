@@ -20,6 +20,9 @@ export const App = () => {
   const showStatistic = () => {
     setOpenStatistic(true);
   };
+  const hideStatistic = () => {
+    setOpenStatistic(false);
+  };
 
   const initAnswer = useCallback(() => {
     // Read cache in localStorage first
@@ -80,7 +83,7 @@ export const App = () => {
       </Content>
       <Footer />
       {
-        openStatistic && (<Statistics open={openStatistic} codeList={codeList} answer={answer} />)
+        openStatistic && (<Statistics open={openStatistic} codeList={codeList} answer={answer} onClose={hideStatistic}/>)
       }
     </div>
   );
