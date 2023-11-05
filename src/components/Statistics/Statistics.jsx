@@ -18,7 +18,7 @@ const DEFAULT_DISTRIBUTIONDATA = {
   '6': 0,
 };
 
-export const Statistics = ({ countries, answer, open }) => {
+export const Statistics = ({ codeList, answer, open }) => {
   const [dataPlayed, setDataPlayed] = useState(0);
   const [dataWin, setDataWin] = useState(0);
   const [dataCurrentStreak, setDataCurrentStreak] = useState(0);
@@ -27,7 +27,6 @@ export const Statistics = ({ countries, answer, open }) => {
 
   useEffect(() => {
     readAll().then((res) => {
-      console.log('db res', res);
       const dateResult = getDateResultListFromDBResult(res);
       const dataPlayedRes = dateResult.filter((e) => e.isFinished).length;
       setDataPlayed(dataPlayedRes);
@@ -66,7 +65,7 @@ export const Statistics = ({ countries, answer, open }) => {
             <Typography variant="body2" display="block" gutterBottom>Max Streak</Typography>
           </Grid>
         </Grid>
-        <Distribution data={distributionData} curDistribution={answer === countries[countries.length - 1] ? countries.length : 0}/>
+        <Distribution data={distributionData} curDistribution={answer === codeList[codeList.length - 1] ? codeList.length : 0}/>
       </DialogContent>
     </Dialog>
   );

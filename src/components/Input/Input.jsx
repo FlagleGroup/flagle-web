@@ -5,20 +5,20 @@ import Autocomplete from '@mui/material/Autocomplete';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 
-import { countries as allCountries } from '../../constant/countries';
+import { countries } from '../../constant/countries';
 import { sendLog } from '../../util/log';
 import { isFinished, isSucceed } from '../../util/isFinished';
 import { Finished } from './Finished';
 
-export const Input = ({ countries, setCountries, answer }) => {
+export const Input = ({ codeList, setCodeList, answer }) => {
   const [inputCountry, setInputCountry] = useState(null);
   const [isOpen, setIsOpen] = useState(false); // To indicate autoComplete dropdown status
-  const finishedStatus = isFinished(countries, answer);
+  const finishedStatus = isFinished(codeList, answer);
   const onSelectCountry = (_, value) => {
     setInputCountry(value);
   };
   const onSubmit = () => {
-    inputCountry && countries.length < 6 && setCountries([...countries, inputCountry.code]);
+    inputCountry && codeList.length < 6 && setCodeList([...codeList, inputCountry.code]);
     setInputCountry(null);
     sendLog({
       code: inputCountry.code,
@@ -43,20 +43,20 @@ export const Input = ({ countries, setCountries, answer }) => {
     >
       {
         finishedStatus ? (
-          <Finished isSucceed={isSucceed(countries, answer)} />
+          <Finished isSucceed={isSucceed(codeList, answer)} />
         ) : (
           <>
             <Autocomplete
               popupIcon={null}
               id="combo-box-demo"
-              options={allCountries.map(e => ({ code: e.code, label: e.name }))}
+              options={countries.map(e => ({ code: e.code, label: e.name }))}
               openOnFocus={false}
               onChange={onSelectCountry}
               onKeyDown={onInputSubmit}
               autoHighlight
               value={inputCountry}
               isOptionEqualToValue={(option, value) => option.code === value.code}
-              getOptionDisabled={(option) => countries.some(e => e === option.code)}
+              getOptionDisabled={(option) => codeList.some(e => e === option.code)}
               onOpen={() => setIsOpen(true)}
               onClose={() => setIsOpen(false)}
               renderInput={(params) => (

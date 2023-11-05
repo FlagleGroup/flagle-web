@@ -6,26 +6,26 @@ import { Footer } from './components/Footer/Footer';
 import { Content } from './components/Content/Content';
 import { Input } from './components/Input/Input';
 import { Statistics } from './components/Statistics/Statistics';
-import { CODE, END_TIME } from './constant/keys';
+import { ANSWER, END_TIME } from './constant/keys';
 import './App.css';
 import { getInfo } from './service';
 import { isFinished } from './util/isFinished';
 import { readAll } from './util/db';
 
 export const App = () => {
-  const [curCounties, setCurCountries] = useState([]);
+  const [codeList, setCodeList] = useState([]);
   const [answer, setAnswer] = useState();
-  const finishedStatus = isFinished(curCounties, answer);
+  const finishedStatus = isFinished(codeList, answer);
   const [openStatistic, setOpenStatistic] = useState(false);
   const showStatistic = () => {
     setOpenStatistic(true);
   };
 
-  const initCode = useCallback(() => {
+  const initAnswer = useCallback(() => {
     // Read cache in localStorage first
-    const codeFromLocalStorage = localStorage.getItem(CODE);
-    if (codeFromLocalStorage && localStorage.getItem(END_TIME) > Date.now()) {
-      setAnswer(codeFromLocalStorage);
+    const answerFromLocalStorage = localStorage.getItem(ANSWER);
+    if (answerFromLocalStorage && localStorage.getItem(END_TIME) > Date.now()) {
+      setAnswer(answerFromLocalStorage);
       return;
     }
     // If no cache available, send request.
@@ -36,31 +36,31 @@ export const App = () => {
       } = res.data;
       setAnswer(resAnswer);
       // store into localStorage as cache.
-      window.localStorage.setItem(CODE, resAnswer);
+      window.localStorage.setItem(ANSWER, resAnswer);
       window.localStorage.setItem(END_TIME, endTime);
     }).catch((err) => {
       // TODO: cache err and call Ralf.
     });
   }, [setAnswer]);
 
-  const initCurCounties = useCallback(() => {
+  const initCurCodeList = useCallback(() => {
     readAll().then((res) => {
       const todayStartTime = new Date(new Date().toISOString().slice(0, 10)).getTime();
-      const countries = [];
+      const codeListFromDB = [];
       while (res.length > 0 && res[res.length - 1].time > todayStartTime) {
         const codeItem = res.pop();
-        countries.unshift(codeItem.code);
-        if (countries.length >= 6) {
+        codeListFromDB.unshift(codeItem.code);
+        if (codeListFromDB.length >= 6) {
           break;
         }
       }
-      setCurCountries(countries);
+      setCodeList(codeListFromDB);
     });
-  }, []);
+  }, [setCodeList]);
 
   useEffect(() => {
-    initCode();
-    initCurCounties();
+    initAnswer();
+    initCurCodeList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -75,13 +75,13 @@ export const App = () => {
       <Header showStatisticModal={showStatistic} />
       <Content>
         <Flag answer={answer} />
-        <Guess countries={curCounties} answer={answer} />
-        <Input countries={curCounties} setCountries={setCurCountries} answer={answer} />
+        <Guess codeList={codeList} answer={answer} />
+        <Input codeList={codeList} setCodeList={setCodeList} answer={answer} />
       </Content>
       <Footer />
       {
-        openStatistic && (<Statistics open={openStatistic} countries={curCounties} answer={answer} />)
+        openStatistic && (<Statistics open={openStatistic} codeList={codeList} answer={answer} />)
       }
     </div>
   );
-}
+};
