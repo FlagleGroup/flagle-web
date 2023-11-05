@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Answers } from './components/Answers/Answers';
+import { Guess } from './components/Guess/Guess';
 import { Header } from './components/Header/Header';
 import { Flag } from './components/Flag/Flag';
 import { Footer } from './components/Footer/Footer';
@@ -14,8 +14,8 @@ import { readAll } from './util/db';
 
 export const App = () => {
   const [curCounties, setCurCountries] = useState([]);
-  const [code, setCode] = useState();
-  const finishedStatus = isFinished(curCounties, code);
+  const [answer, setAnswer] = useState();
+  const finishedStatus = isFinished(curCounties, answer);
   const [openStatistic, setOpenStatistic] = useState(false);
   const showStatistic = () => {
     setOpenStatistic(true);
@@ -25,23 +25,23 @@ export const App = () => {
     // Read cache in localStorage first
     const codeFromLocalStorage = localStorage.getItem(CODE);
     if (codeFromLocalStorage && localStorage.getItem(END_TIME) > Date.now()) {
-      setCode(codeFromLocalStorage);
+      setAnswer(codeFromLocalStorage);
       return;
     }
     // If no cache available, send request.
     getInfo().then((res) => {
       const {
-        code: resCode,
+        answer: resAnswer,
         endTime,
       } = res.data;
-      setCode(resCode);
+      setAnswer(resAnswer);
       // store into localStorage as cache.
-      window.localStorage.setItem(CODE, resCode);
+      window.localStorage.setItem(CODE, resAnswer);
       window.localStorage.setItem(END_TIME, endTime);
     }).catch((err) => {
       // TODO: cache err and call Ralf.
     });
-  }, [setCode]);
+  }, [setAnswer]);
 
   const initCurCounties = useCallback(() => {
     readAll().then((res) => {
@@ -72,15 +72,15 @@ export const App = () => {
 
   return (
     <div className="App">
-      <Header code={code} showStatisticModal={showStatistic} />
+      <Header showStatisticModal={showStatistic} />
       <Content>
-        <Flag code={code} />
-        <Answers countries={curCounties} answer={code} />
-        <Input countries={curCounties} setCountries={setCurCountries} code={code} />
+        <Flag answer={answer} />
+        <Guess countries={curCounties} answer={answer} />
+        <Input countries={curCounties} setCountries={setCurCountries} answer={answer} />
       </Content>
       <Footer />
       {
-        openStatistic && (<Statistics open={openStatistic} countries={curCounties} answer={code} />)
+        openStatistic && (<Statistics open={openStatistic} countries={curCounties} answer={answer} />)
       }
     </div>
   );

@@ -10,10 +10,10 @@ import { sendLog } from '../../util/log';
 import { isFinished, isSucceed } from '../../util/isFinished';
 import { Finished } from './Finished';
 
-export const Input = ({ countries, setCountries, code }) => {
+export const Input = ({ countries, setCountries, answer }) => {
   const [inputCountry, setInputCountry] = useState(null);
   const [isOpen, setIsOpen] = useState(false); // To indicate autoComplete dropdown status
-  const finishedStatus = isFinished(countries, code);
+  const finishedStatus = isFinished(countries, answer);
   const onSelectCountry = (_, value) => {
     setInputCountry(value);
   };
@@ -23,7 +23,7 @@ export const Input = ({ countries, setCountries, code }) => {
     sendLog({
       code: inputCountry.code,
       time: Date.now(),
-      answer: code,
+      answer,
     });
   };
 
@@ -43,7 +43,7 @@ export const Input = ({ countries, setCountries, code }) => {
     >
       {
         finishedStatus ? (
-          <Finished isSucceed={isSucceed(countries, code)} />
+          <Finished isSucceed={isSucceed(countries, answer)} />
         ) : (
           <>
             <Autocomplete
